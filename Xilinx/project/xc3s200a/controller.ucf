@@ -1,0 +1,9 @@
+net clk_in	loc=p43; # 12 mhz clock
+net CK1IN_p	loc=p83 | IOSTANDARD = LVDS_33;
+net CK1IN_n	loc=p84 | IOSTANDARD = LVDS_33;
+net RXIN2_p	loc=p32 | IOSTANDARD = LVDS_33;
+net RXIN2_n	loc=p33 | IOSTANDARD = LVDS_33;
+net RXIN1_p	loc=p34 | IOSTANDARD = LVDS_33;
+net RXIN1_n	loc=p35 | IOSTANDARD = LVDS_33;
+net RXIN0_p	loc=p88 | IOSTANDARD = LVDS_33;
+net RXIN0_n	loc=p89 | IOSTANDARD = LVDS_33;
