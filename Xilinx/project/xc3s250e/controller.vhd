@@ -39,7 +39,8 @@ entity controller is
            RXIN1_n : out  STD_LOGIC;
            RXIN0_p : out  STD_LOGIC;
            RXIN0_n : out  STD_LOGIC;
-           clk_in : in  STD_LOGIC);
+           clk_in : in  STD_LOGIC
+			  );
 end controller;
 
 architecture Behavioral of controller is
@@ -83,13 +84,21 @@ architecture Behavioral of controller is
 	signal RXIN1 : std_logic;
 	signal RXIN2 : std_logic;
 	
+	-- clock
+   signal CLKDV_BUF       : std_logic;
+   signal CLKFB_IN        : std_logic;
+   signal CLKFX_BUF       : std_logic;
+   signal CLKIN_IBUFG     : std_logic;
+   signal CLK0_BUF        : std_logic;
+   signal GND_BIT         : std_logic;
+	
 	signal color_cur : integer range 0 to 2 := 0;
 begin
 
 DCM_SP_inst : DCM_SP
 	generic map (
-		CLKFX_DIVIDE => 1,
-		CLKFX_MULTIPLY => 21 -- 12 Mhz * 21 = 252 Mhz clock
+		CLKFX_DIVIDE => 2, -- 50 Mhz / 2  = 25 Mhz clock
+		CLKFX_MULTIPLY => 5 -- 50 Mhz * 5 = 250 Mhz clock
 	)
 	port map (
 		CLKFX => clk_fast,
@@ -97,8 +106,9 @@ DCM_SP_inst : DCM_SP
 		RST => '0'
 	);
 
+
 OBUFDS_CK1IN_inst : OBUFDS
-	generic map (IOSTANDARD => "LVDS_33")
+	generic map (IOSTANDARD => "LVDS_25")
 	port map (
 		O => CK1IN_p,    -- Diff_p output (connect directly to top-level port)
 		OB => CK1IN_n,   -- Diff_n output (connect directly to top-level port)
@@ -106,7 +116,7 @@ OBUFDS_CK1IN_inst : OBUFDS
 	);
 
 OBUFDS_RXIN0_inst : OBUFDS
-	generic map (IOSTANDARD => "LVDS_33")
+	generic map (IOSTANDARD => "LVDS_25")
 	port map (
 		O => RXIN0_p,    -- Diff_p output (connect directly to top-level port)
 		OB => RXIN0_n,   -- Diff_n output (connect directly to top-level port)
@@ -114,7 +124,7 @@ OBUFDS_RXIN0_inst : OBUFDS
 	);
 
 OBUFDS_RXIN1_inst : OBUFDS
-	generic map (IOSTANDARD => "LVDS_33")
+	generic map (IOSTANDARD => "LVDS_25")
 	port map (
 		O => RXIN1_p,    -- Diff_p output (connect directly to top-level port)
 		OB => RXIN1_n,   -- Diff_n output (connect directly to top-level port)
@@ -122,7 +132,7 @@ OBUFDS_RXIN1_inst : OBUFDS
 	);
 
 OBUFDS_RXIN2_inst : OBUFDS
-	generic map (IOSTANDARD => "LVDS_33")
+	generic map (IOSTANDARD => "LVDS_25")
 	port map (
 		O => RXIN2_p,    -- Diff_p output (connect directly to top-level port)
 		OB => RXIN2_n,   -- Diff_n output (connect directly to top-level port)
