@@ -84,14 +84,6 @@ architecture Behavioral of controller is
 	signal RXIN1 : std_logic;
 	signal RXIN2 : std_logic;
 	
-	-- clock
-   signal CLKDV_BUF       : std_logic;
-   signal CLKFB_IN        : std_logic;
-   signal CLKFX_BUF       : std_logic;
-   signal CLKIN_IBUFG     : std_logic;
-   signal CLK0_BUF        : std_logic;
-   signal GND_BIT         : std_logic;
-	
 	signal color_cur : integer range 0 to 2 := 0;
 begin
 
@@ -105,7 +97,6 @@ DCM_SP_inst : DCM_SP
 		CLKIN => clk_in,
 		RST => '0'
 	);
-
 
 OBUFDS_CK1IN_inst : OBUFDS
 	generic map (IOSTANDARD => "LVDS_25")
