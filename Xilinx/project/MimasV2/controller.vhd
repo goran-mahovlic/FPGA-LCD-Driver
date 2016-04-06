@@ -39,13 +39,12 @@ entity controller is
            RXIN1_n : out  STD_LOGIC;
            RXIN0_p : out  STD_LOGIC;
            RXIN0_n : out  STD_LOGIC;
-           clk_in : in  STD_LOGIC
-			  );
+           clk_in : in  STD_LOGIC);
 end controller;
 
 architecture Behavioral of controller is
 
-	-- fast clock, 12 Mhz x 21 = 252 Mhz, which gives us a pixel clock of 36 Mhz
+	-- fast clock, (100 Mhz / 2 )* 5 = 250 Mhz clock , which gives us a pixel clock of 36 Mhz
 	signal clk_fast : std_logic;
 	
 	-- colors
@@ -89,8 +88,8 @@ begin
 
 DCM_SP_inst : DCM_SP
 	generic map (
-		CLKFX_DIVIDE => 1,
-		CLKFX_MULTIPLY => 5 -- 50 Mhz * 5 = 250 Mhz clock
+		CLKFX_DIVIDE => 2,
+		CLKFX_MULTIPLY => 5 -- (100 Mhz / 2 )* 5 = 250 Mhz clock
 	)
 	port map (
 		CLKFX => clk_fast,
@@ -99,7 +98,7 @@ DCM_SP_inst : DCM_SP
 	);
 
 OBUFDS_CK1IN_inst : OBUFDS
-	generic map (IOSTANDARD => "LVDS_25")
+	generic map (IOSTANDARD => "LVDS_33")
 	port map (
 		O => CK1IN_p,    -- Diff_p output (connect directly to top-level port)
 		OB => CK1IN_n,   -- Diff_n output (connect directly to top-level port)
@@ -107,7 +106,7 @@ OBUFDS_CK1IN_inst : OBUFDS
 	);
 
 OBUFDS_RXIN0_inst : OBUFDS
-	generic map (IOSTANDARD => "LVDS_25")
+	generic map (IOSTANDARD => "LVDS_33")
 	port map (
 		O => RXIN0_p,    -- Diff_p output (connect directly to top-level port)
 		OB => RXIN0_n,   -- Diff_n output (connect directly to top-level port)
@@ -115,7 +114,7 @@ OBUFDS_RXIN0_inst : OBUFDS
 	);
 
 OBUFDS_RXIN1_inst : OBUFDS
-	generic map (IOSTANDARD => "LVDS_25")
+	generic map (IOSTANDARD => "LVDS_33")
 	port map (
 		O => RXIN1_p,    -- Diff_p output (connect directly to top-level port)
 		OB => RXIN1_n,   -- Diff_n output (connect directly to top-level port)
@@ -123,7 +122,7 @@ OBUFDS_RXIN1_inst : OBUFDS
 	);
 
 OBUFDS_RXIN2_inst : OBUFDS
-	generic map (IOSTANDARD => "LVDS_25")
+	generic map (IOSTANDARD => "LVDS_33")
 	port map (
 		O => RXIN2_p,    -- Diff_p output (connect directly to top-level port)
 		OB => RXIN2_n,   -- Diff_n output (connect directly to top-level port)

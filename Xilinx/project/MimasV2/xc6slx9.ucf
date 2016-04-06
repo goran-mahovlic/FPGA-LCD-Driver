@@ -1,0 +1,53 @@
+## NUMATO Mimas V2 ucf file
+## http://numato.com/
+## Sample board provided by Numato
+
+CONFIG VCCAUX = "3.3" ;
+
+##Clock signal 100 MHz
+NET "clk_in" LOC = V10 | IOSTANDARD = LVCMOS33 | PERIOD = 100MHz ;
+Net "clk_in" TNM_NET = sys_clk_pin;
+TIMESPEC TS_sys_clk_pin = PERIOD sys_clk_pin 100 MHz high 50%;
+#PIN "clk_100MHz_25MHz_250MHz/clkout1_buf.O" CLOCK_DEDICATED_ROUTE = FALSE;
+
+#                              Expansion Connector's HEADER P7 when Expansion Connector LED is OFF	                                               #
+####################################################################################################################################################
+
+NET "RXIN0_p"                   LOC = "U8"       | IOSTANDARD = TMDS_33 | DRIVE = 8 | SLEW = FAST ; #Pin 1
+NET "RXIN0_n"                   LOC ="V8"       | IOSTANDARD = TMDS_33 | DRIVE = 8 | SLEW = FAST ; #Pin 2
+NET "RXIN1_p"                   LOC = "R8"      | IOSTANDARD = TMDS_33 | DRIVE = 8 | SLEW = FAST ; #Pin 3
+NET "RXIN1_n"                   LOC = "T8"      | IOSTANDARD = TMDS_33 | DRIVE = 8 | SLEW = FAST ; #Pin 4
+NET "RXIN2_p"                   LOC = "R5"      | IOSTANDARD = TMDS_33 | DRIVE = 8 | SLEW = FAST ; #Pin 5
+NET "RXIN2_n"                   LOC ="T5"      | IOSTANDARD = TMDS_33 | DRIVE = 8 | SLEW = FAST ; #Pin 6
+NET "CK1IN_p"                   LOC = "T9"      | IOSTANDARD = TMDS_33 | DRIVE = 8 | SLEW = FAST ; #Pin 7
+NET "CK1IN_n"                   LOC = "V9"      | IOSTANDARD = TMDS_33 | DRIVE = 8 | SLEW = FAST ; #Pin 8
+
+###################################################################################################################################################
+#                                                   HEADER P8                                                                                     #
+###################################################################################################################################################
+#NET "IO_P8[7]"                  LOC = R11     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 1
+#NET "IO_P8[6]"                  LOC = T11     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 2
+#NET "IO_P8[5]"                  LOC = R10     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 3
+#NET "IO_P8[4]"                  LOC = T10     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 4
+#NET "IO_P8[3]"                  LOC = U13     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 5
+#NET "IO_P8[2]"                  LOC = V13     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 6
+#NET "IO_P8[1]"                  LOC = U11     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 7
+#NET "IO_P8[0]"                  LOC = V11     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin 8
+
+###################################################################################################################################################
+#                                                    VGA                                                                                          #
+################################################################################################################################################### 
+#NET "HSync"                      LOC = B12     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "VSync"                      LOC = A12     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+
+#NET "Red[2]"                     LOC = C9      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "Red[1]"                     LOC = B9      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "Red[0]"                     LOC = A9      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+
+#NET "Green[2]"                   LOC = C11     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "Green[1]"                   LOC = A10     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "Green[0]"                   LOC = C10     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+
+#NET "Blue[2]"                    LOC = A11     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "Blue[1]"                    LOC = B11     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+	 
