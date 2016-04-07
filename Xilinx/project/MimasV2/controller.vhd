@@ -1,52 +1,34 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date:    23:40:06 09/03/2011 
--- Design Name: 
--- Module Name:    controller - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
---
--- Dependencies: 
---
--- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
---
-----------------------------------------------------------------------------------
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_UNSIGNED.ALL;
-
--- Uncomment the following library declaration if using
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.std_logic_unsigned.all;
+ -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
 library UNISIM;
-use UNISIM.VComponents.all;
-
+use UNISIM.VComponents.all; 
+ 
+ 
 entity controller is
-    Port ( CK1IN_p : out  STD_LOGIC;
-           CK1IN_n : out  STD_LOGIC;
-           RXIN2_p : out  STD_LOGIC;
-           RXIN2_n : out  STD_LOGIC;
-           RXIN1_p : out  STD_LOGIC;
-           RXIN1_n : out  STD_LOGIC;
-           RXIN0_p : out  STD_LOGIC;
-           RXIN0_n : out  STD_LOGIC;
-           clk_in : in  STD_LOGIC);
+    port(
+		  CK1IN_p : out  STD_LOGIC;
+        CK1IN_n : out  STD_LOGIC;
+        RXIN2_p : out  STD_LOGIC;
+        RXIN2_n : out  STD_LOGIC;
+        RXIN1_p : out  STD_LOGIC;
+        RXIN1_n : out  STD_LOGIC;
+        RXIN0_p : out  STD_LOGIC;
+        RXIN0_n : out  STD_LOGIC;
+        LED0      : out std_logic := '0';
+        clk_100m   : in std_logic  := '0'
+        );
 end controller;
+ 
+architecture behaviour of controller is
+	 signal clk_fast : std_logic;
 
-architecture Behavioral of controller is
-
-	-- fast clock, (100 Mhz / 2 )* 5 = 250 Mhz clock , which gives us a pixel clock of 36 Mhz
-	signal clk_fast : std_logic;
-	
 	-- colors
 	signal red : std_logic_vector(5 downto 0) := "000000";
 	signal green : std_logic_vector(5 downto 0) := "000000";
@@ -83,7 +65,17 @@ architecture Behavioral of controller is
 	signal RXIN1 : std_logic;
 	signal RXIN2 : std_logic;
 	
-	signal color_cur : integer range 0 to 2 := 0;
+	signal color_cur : integer range 0 to 2 := 0;	 
+	 
+    --count to 16 million for 1Hz
+    constant c_CNT_1HZ   : natural := 250000000;
+     
+    --this signal acts as the counter
+    signal r_CNT_1HZ   : natural range 0 to c_CNT_1HZ;
+     
+    --this signal will toggle at 1Hz
+    signal r_TOGGLE_1HZ : std_logic := '0';
+ 
 begin
 
 DCM_SP_inst : DCM_SP
@@ -93,7 +85,7 @@ DCM_SP_inst : DCM_SP
 	)
 	port map (
 		CLKFX => clk_fast,
-		CLKIN => clk_in,
+		CLKIN => clk_100m,
 		RST => '0'
 	);
 
@@ -214,5 +206,19 @@ begin
 	end if;
 end process;
 
-end Behavioral;
-
+    p_1_Hz : process(clk_fast) is
+    begin
+        if rising_edge(clk_fast) then
+            if r_CNT_1HZ = c_CNT_1HZ then
+            r_TOGGLE_1HZ <= not r_TOGGLE_1HZ;
+            r_CNT_1HZ    <= 0;
+            else
+            r_CNT_1HZ <= r_CNT_1HZ + 1;
+            end if;
+       end if;
+    end process p_1_HZ;
+     
+    LED0 <= r_TOGGLE_1HZ;
+         
+ 
+end behaviour;
